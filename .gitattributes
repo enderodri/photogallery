@@ -1,0 +1,24 @@
+# Establecer tratamiento para todos los archivos de texto
+* text=auto
+
+# Archivos de texto específicos
+*.css text
+*.js text
+*.html text
+*.cs text
+*.cshtml text
+
+# Mantener archivos binarios tal como están
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+
+# Archivos de configuración de Git
+.gitattributes text
+.gitignore text
+
+# Scripts de shell y batch
+*.sh text eol=lf
+*.bat text eol=crlf
