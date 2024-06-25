@@ -10,14 +10,13 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o out
 
+# Run migrations
+RUN dotnet ef database update
+
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build-env /app/out .
-COPY entrypoint.sh .
-
-# Ensure the entrypoint script is executable
-RUN chmod +x entrypoint.sh
 
 # Set the entrypoint
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["dotnet", "PhotoGallery.dll"]
