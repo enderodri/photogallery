@@ -6,8 +6,12 @@ WORKDIR /app
 COPY *.csproj ./
 RUN dotnet restore
 
+# Install dotnet-ef tool
+RUN dotnet tool install --global dotnet-ef
+
 # Copy everything else and build
 COPY . ./
+ENV PATH="${PATH}:/root/.dotnet/tools"
 RUN dotnet publish -c Release -o out
 
 # Run migrations
