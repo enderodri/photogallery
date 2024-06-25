@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,16 @@ builder.Services.AddDbContext<PhotoGallery.Data.PhotoContext>(options =>
 
 // Add PhotoService
 builder.Services.AddScoped<PhotoGallery.Services.PhotoService>();
+
+// Configure Kestrel to use the PORT environment variable
+builder.WebHost.ConfigureKestrel((context, options) =>
+{
+    var port = Environment.GetEnvironmentVariable("PORT");
+    if (!string.IsNullOrEmpty(port))
+    {
+        options.ListenAnyIP(int.Parse(port));
+    }
+});
 
 var app = builder.Build();
 

@@ -15,5 +15,5 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-# Run migrations
-ENTRYPOINT ["dotnet", "PhotoGallery.dll"]
+# Entrypoint script to run migrations and start the app
+ENTRYPOINT ["bash", "-c", "dotnet ef database update && dotnet PhotoGallery.dll"]
